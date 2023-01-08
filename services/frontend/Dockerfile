@@ -1,15 +1,11 @@
-FROM node:lts-alpine
+FROM node
 
 WORKDIR /app
 
-ENV PATH /app/node_modules/.bin:$PATH
+COPY . .
 
-RUN npm install @vue/cli@5.0.8 -g
+RUN npm i
 
-COPY --chown=node:node package*.json ./
-RUN npm install
+EXPOSE 5173
 
-COPY --chown=node:node . .
-USER node
-
-CMD ["npm", "run", "serve"]
+CMD ["npm", "run", "dev"]
