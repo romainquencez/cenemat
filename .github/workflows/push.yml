@@ -1,0 +1,44 @@
+name: push
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+defaults:
+  run:
+    working-directory: services/backend
+jobs:
+  # Label of the container job
+  test:
+    # Containers must run in Linux based operating systems
+    runs-on: ubuntu-22.04
+    # Docker Hub image that job executes in
+    container: python:3.11-buster
+
+    # Service containers to run with job
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres:14.6
+        # Provide the password for postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v3
+        name: Check out repository code
+
+      - name: Install Python requirements
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -r requirements-dev.txt
+
+      - name: Run tests
+        run: pytest .
