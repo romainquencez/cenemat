@@ -1,11 +1,12 @@
-FROM node
+FROM node:lts
 
 WORKDIR /app
 
 COPY . .
 
-RUN npm i
+RUN npm i && \
+    npm i -g @quasar/cli
 
-EXPOSE 5173
+EXPOSE 9000
 
-CMD ["npm", "run", "dev"]
+CMD ["quasar", "dev"]

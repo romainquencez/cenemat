@@ -18,7 +18,7 @@ services:
       - './services/frontend:/app'
       - '/app/node_modules'
     ports:
-      - "5173:5173"
+      - "9000:9000"
 
   db:
     image: postgres:14.6

@@ -35,6 +35,12 @@ Les adresses suivantes sont accessibles :
 * [Serveur web](http://localhost:5000) : `http://localhost:5000`
 * [Swagger](http://localhost:5000/docs) : `http://localhost:5000/docs`
 
+Suvi des logs :
+
+```shell
+docker-compose logs -ft backend
+```
+
 ### Vérifier les mise à jour
 
 ```shell
@@ -71,10 +77,10 @@ docker-compose exec backend pytest .
 Suvi des logs :
 
 ```shell
-docker-compose logs -f frontend
+docker-compose logs -ft frontend
 ```
 
-L'application est disponible sur `localhost:8080`.
+L'application est disponible sur `localhost:9000`.
 
 ### Linter
 
@@ -84,11 +90,21 @@ Le linter peut être exécutée pour s'assurer que le code est conforme :
 docker-compose exec frontend npm run lint
 ```
 
+### Formatter
+
+```shell
+docker-compose exec frontend npm run format
+```
+
 ### Construire la version de production
 
 ```shell
-docker-compose exec frontend npm run build
+docker-compose exec frontend quasar build
 ```
+
+### Liens utiles
+
+* [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-config-js)
 
 ## Pre-commit
 
