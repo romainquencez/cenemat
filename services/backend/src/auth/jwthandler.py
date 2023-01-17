@@ -43,6 +43,7 @@ class OAuth2PasswordBearerCookie(OAuth2):
 security = OAuth2PasswordBearerCookie(token_url="/login")
 
 
+# Takes in the user's email, encodes it with the expiring time, and generates a token from it.
 def create_access_token(data: dict, expires_delta: timedelta | None = None):
     to_encode = data.copy()
 
