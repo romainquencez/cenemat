@@ -3,8 +3,8 @@ services:
 
   backend:
     build: ./services/backend
-    environment:
-      - DATABASE_URL=postgres://cenemat:cenemat@db:5432/cenemat
+    env_file:
+      - .env
     volumes:
       - ./services/backend:/app
     ports:

@@ -8,7 +8,13 @@ Copier et compléter le fichier des variables d'environnement :
 cp .env.example .env
 ```
 
-Copier et compléter les fichiers de configuration.
+Le compléter avec ces valeurs pour du développement local :
+
+Clé | Valeur
+---|---
+DATABASE_URL | postgres://cenemat:cenemat@db:5432/cenemat
+FASTAPI_ALLOW_ORIGIN | http://localhost:8080
+JWT_SECRET_KEY | Générer une clé secrète
 
 Récupérer les images Docker :
 

@@ -1,7 +1,7 @@
-import os
+from src.settings import DATABASE_URL
 
 TORTOISE_ORM = {
-    "connections": {"default": os.environ.get("DATABASE_URL")},
+    "connections": {"default": DATABASE_URL},
     "apps": {
         "models": {
             "models": ["src.database.models", "aerich.models"],

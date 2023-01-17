@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from src.database.config import TORTOISE_ORM
 from src.database.register import register_tortoise
+from src.settings import FASTAPI_ALLOW_ORIGIN
 from tortoise import Tortoise
 
 # enable schemas to read relationship between models
@@ -13,7 +14,7 @@ app = FastAPI()
 # CORS handle
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:8080"],
+    allow_origins=[FASTAPI_ALLOW_ORIGIN],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
