@@ -1,35 +1,77 @@
-from fastapi import HTTPException
+from models.users import UserId, UserIn, UserOut, UserPasswordOut
 from passlib.context import CryptContext
-from src.database.models import Users
-from src.schemas.users import UserOutSchema
-from tortoise.exceptions import DoesNotExist, IntegrityError
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+password_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
-async def create_user(user) -> UserOutSchema:
-    user.password = pwd_context.encrypt(user.password)
-
-    try:
-        user_obj = await Users.create(**user.dict(exclude_unset=True))
-    except IntegrityError:
-        raise HTTPException(
-            status_code=401, detail="Sorry, that username already exists."
+async def create_user(connection, user: UserIn) -> UserId:
+    user.password = password_context.hash(user.password)
+    print(user.password)
+    return UserId.parse_obj(
+        await connection.fetchrow(
+            """
+                INSERT INTO public.user (
+                    identifier,
+                    email,
+                    farm,
+                    first_name,
+                    last_name,
+                    membership_year,
+                    password,
+                    legal_status_id
+                ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+                RETURNING id
+            """,
+            *user.dict().values()
         )
+    )
 
-    return await UserOutSchema.from_tortoise_orm(user_obj)
+
+async def get_user_from_id(connection, user_id: int) -> UserOut:
+    return UserOut.parse_obj(
+        await connection.fetchrow(
+            """
+                SELECT
+                    id,
+                    identifier,
+                    email,
+                    farm,
+                    first_name,
+                    last_name,
+                    membership_year,
+                    created_at,
+                    legal_status_id
+                FROM public.user WHERE id = $1
+            """,
+            user_id,
+        )
+    )
 
 
-async def delete_user(user_id, current_user):
-    try:
-        db_user = await UserOutSchema.from_queryset_single(Users.get(id=user_id))
-    except DoesNotExist:
-        raise HTTPException(status_code=404, detail=f"User {user_id} not found")
+async def get_user_from_email(connection, email: str) -> UserOut:
+    return UserOut.parse_obj(
+        await connection.fetchrow(
+            """
+                SELECT
+                    id,
+                    identifier,
+                    email,
+                    farm,
+                    first_name,
+                    last_name,
+                    membership_year,
+                    created_at,
+                    legal_status_id
+                FROM public.user WHERE email = $1
+            """,
+            email,
+        )
+    )
 
-    if db_user.id == current_user.id:
-        deleted_count = await Users.filter(id=user_id).delete()
-        if not deleted_count:
-            raise HTTPException(status_code=404, detail=f"User {user_id} not found")
-        return f"Deleted user {user_id}"
 
-    raise HTTPException(status_code=403, detail="Not authorized to delete")
+async def get_user_password(connection, email: str) -> UserPasswordOut:
+    return UserPasswordOut.parse_obj(
+        await connection.fetchrow(
+            "SELECT id, password FROM public.user WHERE email = $1", email
+        )
+    )
