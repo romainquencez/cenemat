@@ -1,12 +1,8 @@
+import asyncpg
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from src.database.config import TORTOISE_ORM
-from src.database.register import register_tortoise
-from src.settings import FASTAPI_ALLOW_ORIGIN
-from tortoise import Tortoise
-
-# enable schemas to read relationship between models
-Tortoise.init_models(["src.database.models"], "models")
+from routes import legal_status, users
+from settings import settings
 
 # initialize FastAPI
 app = FastAPI()
@@ -14,22 +10,24 @@ app = FastAPI()
 # CORS handle
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[FASTAPI_ALLOW_ORIGIN],
+    allow_origins=[settings.fastapi_allow_origin],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# ORM handle
-register_tortoise(app, config=TORTOISE_ORM, generate_schemas=False)
+# add routes
+app.include_router(legal_status.router, prefix="/legal-status")
+app.include_router(users.router, prefix="/users")
 
 
-@app.get("/")
-def home():
-    return "Hello, World!"
-
-
-# only for testing
-@app.get("/ping")
-async def pong():
-    return {"ping": "pong!"}
+# initialize db's pool on startup
+@app.on_event("startup")
+async def startup():
+    app.state.db = await asyncpg.create_pool(
+        host=settings.postgres_host,
+        port=settings.postgres_port,
+        user=settings.postgres_user,
+        database=settings.postgres_db,
+        password=settings.postgres_password,
+    )

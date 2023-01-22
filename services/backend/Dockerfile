@@ -18,14 +18,8 @@ RUN apt-get update && \
     pip install -r requirements.txt && \
     pip install -r requirements-dev.txt
 
-# for migrations
-COPY migrations .
-COPY pyproject.toml .
-
-COPY src/ .
-
 # expose server port
-EXPOSE 5000
+EXPOSE 80
 
 # executing command
-CMD ["uvicorn", "src.main:app", "--reload", "--host", "0.0.0.0", "--port", "5000"]
+CMD ["uvicorn", "main:app", "--reload", "--host", "0.0.0.0", "--port", "80"]

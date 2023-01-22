@@ -1,12 +1,21 @@
-import os
+from pydantic import BaseSettings
 
-# Database
-DATABASE_URL = os.environ.get("DATABASE_URL")
 
-# FastAPI
-FASTAPI_ALLOW_ORIGIN = os.environ.get("FASTAPI_ALLOW_ORIGIN")
+class Settings(BaseSettings):
+    # Database
+    postgres_user: str
+    postgres_password: str
+    postgres_db: str
+    postgres_port: int
+    postgres_host: str
 
-# JWT
-JWT_SECRET_KEY = os.environ.get("JWT_SECRET_KEY")
-JWT_ALGORITHM = os.environ.get("JWT_ALGORITHM", "HS256")
-JWT_ACCESS_TOKEN_EXPIRE_MINUTES = os.environ.get("JWT_ACCESS_TOKEN_EXPIRE_MINUTES", 30)
+    # FastAPI
+    fastapi_allow_origin: str
+
+    # JWT
+    jwt_secret_key: str
+    jwt_access_token_expire_minutes: int
+    jwt_algorithm: str
+
+
+settings = Settings()

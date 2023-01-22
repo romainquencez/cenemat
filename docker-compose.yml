@@ -6,9 +6,9 @@ services:
     env_file:
       - .env
     volumes:
-      - ./services/backend:/app
+      - ./services/backend/src:/app
     ports:
-      - "5000:5000"
+      - "8000:80"
     depends_on:
       - db
 
@@ -21,15 +21,24 @@ services:
       - "9000:9000"
 
   db:
-    image: postgres:14.6
+    image: postgres:15.1
     environment:
-      - POSTGRES_USER=cenemat
-      - POSTGRES_PASSWORD=cenemat
-      - POSTGRES_DB=cenemat
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
     ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - "${POSTGRES_PORT}:5432"
 
-volumes:
-  postgres_data:
+  migrations:
+    image: flyway/flyway:9.12
+    command: -connectRetries=60 migrate
+    depends_on:
+      - db
+    environment:
+      - FLYWAY_USER=${POSTGRES_USER}
+      - FLYWAY_PASSWORD=${POSTGRES_PASSWORD}
+      - FLYWAY_URL=jdbc:postgresql://db:${POSTGRES_PORT}/${POSTGRES_DB}
+      - FLYWAY_GROUP=true
+      - FLYWAY_CLEAN_DISABLED=${FLYWAY_CLEAN_DISABLED}
+    volumes:
+      - ./services/sql:/flyway/sql
