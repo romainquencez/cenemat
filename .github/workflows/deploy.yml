@@ -4,10 +4,6 @@ on:
     tags:
       - stable
 
-defaults:
-  run:
-    working-directory: services/backend
-
 jobs:
   docker:
     runs-on: ubuntu-22.04
@@ -21,5 +17,6 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
+          context: ./services/backend
           push: true
-          tags: romainqcz/cenemat:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/cenemat:latest
