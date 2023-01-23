@@ -1,0 +1,24 @@
+FROM python:3.11-buster
+
+WORKDIR /app
+
+# set environment variables
+ENV PATH="${PATH}:/root/.local/bin"
+ENV PYTHONPATH=.
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+# copy app
+COPY ../.. .
+
+# upgrade packages
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    pip install --upgrade pip && \
+    pip install -r requirements.txt
+
+# expose server port
+EXPOSE 80
+
+# executing command
+CMD ["uvicorn", "main:app", "--reload", "--host", "0.0.0.0", "--port", "80"]
