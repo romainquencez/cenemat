@@ -20,6 +20,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
-          file: ./services/backend/Dockerfile
+          context: ./services/backend
+          file: ./services/backend/Dockerfile-production
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:latest
