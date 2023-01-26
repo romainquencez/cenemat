@@ -12,7 +12,7 @@ export const usersStore = defineStore('users', {
   actions: {
     async register({dispatch}, form) {
       await axios.post('register', form)
-      let UserForm = new FormData()
+      const UserForm = new FormData()
       UserForm.append('username', form.username)
       UserForm.append('password', form.password)
       await dispatch('logIn', UserForm)
@@ -22,7 +22,7 @@ export const usersStore = defineStore('users', {
       await dispatch('viewMe')
     },
     async viewMe({commit}) {
-      let {data} = await axios.get('users/whoami')
+      const {data} = await axios.get('users/whoami')
       await commit('setUser', data)
     },
     // eslint-disable-next-line no-empty-pattern
@@ -30,7 +30,7 @@ export const usersStore = defineStore('users', {
       await axios.delete(`user/${id}`)
     },
     async logOut({commit}) {
-      let user = null
+      const user = null
       commit('logout', user)
     }
   },
