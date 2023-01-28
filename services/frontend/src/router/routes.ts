@@ -13,7 +13,18 @@ const routes: RouteRecordRaw[] = [
       {
         name: 'login',
         path: 'connexion',
-        component: () => import('pages/LoginPage.vue')
+        component: () => import('pages/LoginPage.vue'),
+        meta: {
+          requiresAuth: false,
+        },
+      },
+      {
+        name: 'user',
+        path: 'mon-compte',
+        component: () => import('pages/UserPage.vue'),
+        meta: {
+          requiresAuth: true,
+        },
       },
     ],
   },

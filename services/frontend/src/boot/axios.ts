@@ -1,5 +1,7 @@
 import { boot } from 'quasar/wrappers';
 import axios, { AxiosInstance } from 'axios';
+import { useUserStore } from 'stores/users'
+import { useRouter } from 'vue-router'
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
@@ -13,7 +15,26 @@ declare module '@vue/runtime-core' {
 // good idea to move this instance creation inside of the
 // "export default () => {}" function below (which runs individually
 // for each client)
-const api = axios.create({ baseURL: 'https://api.example.com' });
+const api = axios.create(
+  {
+    baseURL: process.env.API_URL,
+    withCredentials: true,
+  }
+)
+
+axios.interceptors.response.use(undefined, function (error) {
+  if (error) {
+    // if user is no longer authenticated, logout him and redirect him to login page
+    const originalRequest = error.config
+    if (error.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true
+      const userStore = useUserStore()
+      const router = useRouter()
+      userStore.logOut()
+      return router.push({name: 'login'})
+    }
+  }
+})
 
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api

@@ -10,15 +10,16 @@ cp .env.example .env
 
 Le compléter avec ces valeurs pour du développement local :
 
-Clé | Valeur
----|---
-POSTGRES_USER | cenemat
-POSTGRES_PASSWORD | cenemat
-POSTGRES_DB | cenemat
-POSTGRES_PORT | 5432
-FLYWAY_CLEAN_DISABLED | false
-FASTAPI_ALLOW_ORIGIN | http://localhost:44325
-JWT_SECRET_KEY | Générer une clé secrète
+| Clé                   | Description                  | Valeur                  |
+|-----------------------|------------------------------|-------------------------|
+| POSTGRES_USER         | Utilisateur Postgres         | cenemat                 |
+| POSTGRES_PASSWORD     | Mot de passe Postgres        | cenemat                 |
+| POSTGRES_DB           | Base de données Postgres     | cenemat                 |
+| POSTGRES_PORT         | Port Postgres                | 5432                    |
+| FLYWAY_CLEAN_DISABLED | Commande clean de Flyway     | false                   |
+| FASTAPI_ALLOW_ORIGIN  | Origine autorisée            | http://localhost:9000   |
+| JWT_SECRET_KEY        | Clé secrète utilisée par JWT | Générer une clé secrète |
+| API_URL               | URL vers le serveur API      | http://localhost:8000   |
 
 Récupérer les images Docker :
 

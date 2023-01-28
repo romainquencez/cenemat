@@ -1,7 +1,7 @@
-import axios from 'axios'
 import { defineStore } from 'pinia'
+import { api } from 'boot/axios'
 
-export const usersStore = defineStore('users', {
+export const useUserStore = defineStore('users', {
   state: () => ({
     user: null,
   }),
@@ -10,36 +10,32 @@ export const usersStore = defineStore('users', {
     stateUser: state => state.user,
   },
   actions: {
-    async register({dispatch}, form) {
-      await axios.post('register', form)
-      const UserForm = new FormData()
-      UserForm.append('username', form.username)
-      UserForm.append('password', form.password)
-      await dispatch('logIn', UserForm)
+    async logIn(credentials) {
+      const response = await api.post('users/login', credentials)
+      if (response.status !== 200 ) throw Error
+      const user = await api.get('users/whoami')
+      const data = user.data
+      this.user = {
+        createdAt: new Date(data.created_at),
+        email: data.email,
+        farm: data.farm,
+        firstName: data.first_name,
+        lastName: data.last_name,
+        id: data.id,
+        identifier: Number(data.identifier),
+        legalStatusId: data.legal_status_id,
+      }
+      return response
     },
-    async logIn({dispatch}, user) {
-      await axios.post('login', user)
-      await dispatch('viewMe')
-    },
-    async viewMe({commit}) {
-      const {data} = await axios.get('users/whoami')
-      await commit('setUser', data)
-    },
-    // eslint-disable-next-line no-empty-pattern
-    async deleteUser({}, id) {
-      await axios.delete(`user/${id}`)
-    },
-    async logOut({commit}) {
-      const user = null
-      commit('logout', user)
+    async logOut() {
+      return await api.post('users/logout').then(() => {
+        this.user = null
+      })
     }
   },
   mutations: {
     setUser(state, username) {
       state.user = username;
-    },
-    logout(state, user) {
-      state.user = user;
     },
   }
 })

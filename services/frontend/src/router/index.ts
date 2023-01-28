@@ -5,6 +5,7 @@ import {
   createWebHashHistory,
   createWebHistory,
 } from 'vue-router';
+import { useUserStore } from 'stores/users'
 
 import routes from './routes';
 
@@ -31,6 +32,32 @@ export default route(function (/* { store, ssrContext } */) {
     // quasar.conf.js -> build -> publicPath
     history: createHistory(process.env.VUE_ROUTER_BASE),
   });
+
+  const userStore = useUserStore()
+
+  Router.beforeEach((to, from, next) => {
+    // if route require being authenticated, but user is not authenticated
+    if (
+      to.matched.some((record) => record.meta.requiresAuth) &&
+      !userStore.isAuthenticated
+    ) {
+      // redirect to login page
+      Router.push({name: 'login'})
+
+      // if route require being unauthenticated, but user is authenticated
+    } else if (
+      to.matched.some((record) => record.meta.requiresAuth === false) &&
+      userStore.isAuthenticated
+    ) {
+      // redirect to user page
+      Router.push({name: 'user'})
+
+    // if route does not require any special authentication
+    } else {
+      // continue to route
+      next()
+    }
+  })
 
   return Router;
 });
