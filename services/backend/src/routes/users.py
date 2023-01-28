@@ -53,6 +53,14 @@ async def login(
     return response
 
 
+@router.post("/logout")
+async def logout():
+    # delete auth cookie and return response
+    response = JSONResponse(content={"message": "You've successfully logged out."})
+    response.delete_cookie(key="Authorization")
+    return response
+
+
 @router.post("/register", response_model=UserOut)
 async def register_user(request: Request, user: UserIn) -> UserOut:
     async with request.app.state.db.acquire() as connection:

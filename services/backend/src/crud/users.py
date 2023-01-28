@@ -69,9 +69,9 @@ async def get_user_from_email(connection, email: str) -> UserOut:
     )
 
 
-async def get_user_password(connection, email: str) -> UserPasswordOut:
-    return UserPasswordOut.parse_obj(
-        await connection.fetchrow(
-            "SELECT id, password FROM public.user WHERE email = $1", email
-        )
+async def get_user_password(connection, email: str) -> UserPasswordOut | None:
+    # try to get user's password with its email, or return None if email does not exist.
+    record = await connection.fetchrow(
+        "SELECT id, password FROM public.user WHERE email = $1", email
     )
+    return UserPasswordOut.parse_obj(record) if record else None
