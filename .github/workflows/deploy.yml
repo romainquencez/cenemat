@@ -23,6 +23,6 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           build-args:
-            - VERSION=${{ github.event.release.tag_name }}
+            - VERSION: ${{ github.event.release.tag_name }}
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:${{ github.event.release.tag_name }}
