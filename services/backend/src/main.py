@@ -1,6 +1,7 @@
 import asyncpg
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from routes import legal_status, users
 from settings import settings
 
@@ -19,6 +20,9 @@ app.add_middleware(
 # add routes
 app.include_router(legal_status.router, prefix="/legal-status")
 app.include_router(users.router, prefix="/users")
+
+# add frontend staticfiles route
+app.mount("/", StaticFiles(directory="static/frontend"), name="static-frontend")
 
 
 # initialize db's pool on startup

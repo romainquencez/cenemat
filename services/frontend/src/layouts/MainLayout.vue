@@ -91,6 +91,12 @@
               Site web
             </q-item-section>
           </q-item>
+
+          <q-item>
+            <q-item-section>
+              v. {{ version }}
+            </q-item-section>
+          </q-item>
         </q-list>
       </q-scroll-area>
     </q-drawer>
@@ -112,10 +118,12 @@ export default defineComponent({
     const leftDrawerOpen = ref(false)
     const userStore = useUserStore()
     const router = useRouter()
+    const version = process.env.VERSION
 
     return {
       userStore,
       leftDrawerOpen,
+      version,
       toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value
       },
