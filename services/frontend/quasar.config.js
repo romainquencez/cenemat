@@ -71,6 +71,7 @@ module.exports = configure(function (/* ctx */) {
       // analyze: true,
       env: {
         API_URL: process.env.API_URL,
+        VERSION: process.env.VERSION || 'dev',
       },
       // rawDefine: {}
       // ignorePublicFolder: true,

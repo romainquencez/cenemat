@@ -69,7 +69,7 @@ export default defineComponent({
         })
         // redirect user to his page
         router.push({name: 'user'})
-      }).catch(error => {
+      }).catch(() => {
         // show error message
         $q.notify({
           color: 'red-4',
