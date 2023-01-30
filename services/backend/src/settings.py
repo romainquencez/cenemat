@@ -17,5 +17,8 @@ class Settings(BaseSettings):
     jwt_access_token_expire_minutes: int
     jwt_algorithm: str
 
+    # Sentry
+    sentry_dsn: str | None
+
 
 settings = Settings()

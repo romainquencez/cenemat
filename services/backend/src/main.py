@@ -1,9 +1,18 @@
 import asyncpg
+import sentry_sdk
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from routes import legal_status, users
 from settings import settings
+
+# initialize Sentry SDK before FastAPI
+# see https://docs.sentry.io/platforms/python/guides/fastapi/
+if settings.sentry_dsn:
+    sentry_sdk.init(
+        dsn=settings.sentry_dsn,
+        traces_sample_rate=1.0,
+    )
 
 # initialize FastAPI
 app = FastAPI()

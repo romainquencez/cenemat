@@ -8,4 +8,5 @@ psycopg[binary]==3.1.8
 pydantic==1.10.4
 python-jose==3.3.0
 python-multipart==0.0.5
+sentry-sdk[fastapi]==1.14.0
 uvicorn==0.20.0
