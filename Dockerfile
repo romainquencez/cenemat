@@ -6,7 +6,7 @@ FROM node:lts as frontend
 WORKDIR /opt/app
 
 ARG VERSION
-ENV VERSION=VERSION
+ENV VERSION=$VERSION
 
 COPY services/frontend .
 
@@ -32,6 +32,9 @@ ENV PYTHONUNBUFFERED 1
 COPY services/backend/src /opt/cenemat
 COPY services/backend/requirements.txt /opt/cenemat
 
+# copy SQL migrations
+COPY services/sql /opt/sql
+
 # upgrade Debian packages, install Python dependencies, create frontend static directory
 RUN apt-get update && \
     apt-get upgrade -y && \
@@ -45,7 +48,7 @@ RUN apt-get update && \
 COPY --from=frontend /opt/app/dist/pwa /opt/cenemat/static/frontend
 
 # expose server port
-EXPOSE 80
+EXPOSE 8000
 
 # executing command with gunicorn
 # see https://www.uvicorn.org/deployment/#gunicorn
