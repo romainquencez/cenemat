@@ -52,4 +52,4 @@ EXPOSE 8000
 
 # executing command with gunicorn
 # see https://www.uvicorn.org/deployment/#gunicorn
-CMD ["gunicorn", "-w",  "4", "-k", "uvicorn.workers.UvicornWorker"]
+CMD ["gunicorn", "main:app", "-w",  "4", "-k", "uvicorn.workers.UvicornWorker"]
