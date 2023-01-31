@@ -50,8 +50,8 @@ export default defineComponent({
   name: 'LoginPage',
   setup () {
     const $q = useQuasar()
-    const email = ref('rqu@rqu.fr')
-    const password = ref('rqu')
+    const email = ref(null)
+    const password = ref(null)
     const userStore = useUserStore()
     const router = useRouter()
     const onSubmit = async () => {
