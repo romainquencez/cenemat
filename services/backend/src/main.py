@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import asyncpg
 import sentry_sdk
 from fastapi import FastAPI
@@ -31,7 +33,8 @@ app.include_router(legal_status.router, prefix="/legal-status")
 app.include_router(users.router, prefix="/users")
 
 # add frontend staticfiles route
-app.mount("/", StaticFiles(directory="static/frontend"), name="static-frontend")
+if Path("static/frontend").exists():
+    app.mount("/", StaticFiles(directory="static/frontend"), name="static-frontend")
 
 
 # initialize db's pool on startup
