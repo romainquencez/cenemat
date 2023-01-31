@@ -92,9 +92,9 @@
             </q-item-section>
           </q-item>
 
-          <q-item>
+          <q-item v-if="version">
             <q-item-section>
-              v. {{ version }}
+              {{ version }}
             </q-item-section>
           </q-item>
         </q-list>
