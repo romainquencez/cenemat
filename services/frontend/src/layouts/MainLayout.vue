@@ -10,17 +10,68 @@
           aria-label="Menu"
           @click="toggleLeftDrawer"
         />
-        <q-tabs
-          shrink
+
+        <q-btn
           stretch
+          flat
+          label="CENEMAT"
+          :to="{ name: 'home' }"
+          exact
+        />
+
+        <q-space />
+
+        <q-btn-dropdown
+          stretch
+          flat
+          icon="person"
         >
-          <q-route-tab
-            exact
-            name="home"
-            label="CENEMAT"
-            :to="{ name: 'home' }"
-          />
-        </q-tabs>
+          <q-list>
+            <template v-if="userStore.isAuthenticated">
+              <q-item
+                exact
+                clickable
+                v-ripple
+                :to="{ name: 'user' }"
+              >
+                <q-item-section avatar>
+                  <q-icon name="person" />
+                </q-item-section>
+                <q-item-section>
+                  Mon compte
+                </q-item-section>
+              </q-item>
+
+              <q-item
+                exact
+                clickable
+                v-ripple
+                @click="logOut()"
+              >
+                <q-item-section avatar>
+                  <q-icon name="logout" />
+                </q-item-section>
+                <q-item-section>
+                  Déconnexion
+                </q-item-section>
+              </q-item>
+            </template>
+            <q-item
+              v-else
+              exact
+              clickable
+              v-ripple
+              :to="{ name: 'login' }"
+            >
+              <q-item-section avatar>
+                <q-icon name="login" />
+              </q-item-section>
+              <q-item-section>
+                Connexion
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-btn-dropdown>
       </q-toolbar>
     </q-header>
 
@@ -32,49 +83,7 @@
     >
       <q-scroll-area class="fit">
         <q-list>
-          <template v-if="userStore.isAuthenticated">
-            <q-item
-              exact
-              clickable
-              v-ripple
-              :to="{ name: 'user' }"
-            >
-              <q-item-section avatar>
-                <q-icon name="person" />
-              </q-item-section>
-              <q-item-section>
-                Mon compte
-              </q-item-section>
-            </q-item>
-
-            <q-item
-              exact
-              clickable
-              v-ripple
-              @click="logOut()"
-            >
-              <q-item-section avatar>
-                <q-icon name="logout" />
-              </q-item-section>
-              <q-item-section>
-                Déconnexion
-              </q-item-section>
-            </q-item>
-          </template>
-          <q-item
-            v-else
-            exact
-            clickable
-            v-ripple
-            :to="{ name: 'login' }"
-          >
-            <q-item-section avatar>
-              <q-icon name="login" />
-            </q-item-section>
-            <q-item-section>
-              Connexion
-            </q-item-section>
-          </q-item>
+          <q-item-label header>CENEMAT</q-item-label>
 
           <q-separator />
 
