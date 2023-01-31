@@ -11,6 +11,11 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/IndexPage.vue')
       },
       {
+        name: 'legal-mentions',
+        path: 'mentions-legales',
+        component: () => import('pages/LegalMentionsPage.vue'),
+      },
+      {
         name: 'login',
         path: 'connexion',
         component: () => import('pages/LoginPage.vue'),
