@@ -32,7 +32,7 @@ services:
       - "${POSTGRES_PORT}:5432"
 
   migrations:
-    image: flyway/flyway:9.12
+    image: flyway/flyway:9.14
     command: -connectRetries=60 migrate
     depends_on:
       - db
