@@ -85,6 +85,20 @@
         <q-list>
           <q-item-label header>CENEMAT</q-item-label>
 
+          <q-item
+            exact
+            clickable
+            v-ripple
+            :to="{ name: 'legal-mentions' }"
+          >
+            <q-item-section avatar>
+              <q-icon name="policy" />
+            </q-item-section>
+            <q-item-section>
+              Mentions légales
+            </q-item-section>
+          </q-item>
+
           <q-separator />
 
           <q-item
