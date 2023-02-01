@@ -9,4 +9,4 @@ RUN npm i && \
 
 EXPOSE 9000
 
-CMD ["quasar", "dev"]
+CMD ["quasar", "dev", "-m", "pwa"]

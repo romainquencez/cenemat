@@ -1,0 +1,8 @@
+{
+  "id":"cenemat",
+  "name":"Cenemat",
+  "short_name":"cenemat",
+  "description":"Cenemat",
+  "display":"standalone",
+  "start_url":"/"
+}
