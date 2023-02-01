@@ -15,6 +15,7 @@ COPY services/frontend .
 RUN npm i && \
     npm i -g @quasar/cli && \
     cd /opt/app && \
+    quasar mode add pwa && \
     quasar build -m pwa
 
 # then build final stage with backend, and frontend copied from first stage
