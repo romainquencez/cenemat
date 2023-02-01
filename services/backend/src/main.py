@@ -34,7 +34,9 @@ app.include_router(users.router, prefix="/users")
 
 # add frontend staticfiles route
 if Path("static/frontend").exists():
-    app.mount("/", StaticFiles(directory="static/frontend"), name="static-frontend")
+    app.mount(
+        "/", StaticFiles(directory="static/frontend", html=True), name="static-frontend"
+    )
 
 
 # initialize db's pool on startup
