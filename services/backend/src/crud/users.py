@@ -6,7 +6,6 @@ password_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 async def create_user(connection, user: UserIn) -> UserId:
     user.password = password_context.hash(user.password)
-    print(user.password)
     return UserId.parse_obj(
         await connection.fetchrow(
             """

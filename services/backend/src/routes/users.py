@@ -69,7 +69,7 @@ async def register_user(request: Request, user: UserIn) -> UserOut:
             # create user
             user_id = await create_user(connection, user)
             # get user
-            return await get_user_from_id(connection, user_id)
+            return await get_user_from_id(connection, user_id.id)
 
 
 @router.get("/whoami", response_model=UserOut, dependencies=[Depends(get_current_user)])
