@@ -41,6 +41,6 @@ services:
       - FLYWAY_PASSWORD=${POSTGRES_PASSWORD}
       - FLYWAY_URL=jdbc:postgresql://db:${POSTGRES_PORT}/${POSTGRES_DB}
       - FLYWAY_GROUP=true
-      - FLYWAY_CLEAN_DISABLED=${FLYWAY_CLEAN_DISABLED}
+      - FLYWAY_CLEAN_DISABLED=false
     volumes:
       - ./services/sql:/flyway/sql

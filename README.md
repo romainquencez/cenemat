@@ -16,7 +16,6 @@ Le compléter avec ces valeurs pour du développement local :
 | POSTGRES_PASSWORD     | Mot de passe Postgres        | cenemat                 |
 | POSTGRES_DB           | Base de données Postgres     | cenemat                 |
 | POSTGRES_PORT         | Port Postgres                | 5432                    |
-| FLYWAY_CLEAN_DISABLED | Commande clean de Flyway     | false                   |
 | FASTAPI_ALLOW_ORIGIN  | Origine autorisée            | http://localhost:9000   |
 | JWT_SECRET_KEY        | Clé secrète utilisée par JWT | Générer une clé secrète |
 | API_URL               | URL vers le serveur API      | http://localhost:8000   |
