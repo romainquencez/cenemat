@@ -1,7 +1,7 @@
 # build an image with front and backend for production purposes.
 
 # build first stage with frontend
-FROM node:lts as frontend
+FROM node:lts-alpine as frontend
 
 WORKDIR /opt/app
 
@@ -19,7 +19,7 @@ RUN npm i && \
     quasar build -m pwa
 
 # then build final stage with backend, and frontend copied from first stage
-FROM python:3.11-buster
+FROM python:3.11-slim-bullseye
 
 WORKDIR /opt/cenemat
 

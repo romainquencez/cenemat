@@ -23,7 +23,7 @@ services:
       - API_URL=${API_URL}
 
   db:
-    image: postgres:15.1
+    image: postgres:15-alpine
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
@@ -32,7 +32,7 @@ services:
       - "${POSTGRES_PORT}:5432"
 
   migrations:
-    image: flyway/flyway:9.14
+    image: flyway/flyway:9-alpine
     command: -connectRetries=60 migrate
     depends_on:
       - db
@@ -42,5 +42,6 @@ services:
       - FLYWAY_URL=jdbc:postgresql://db:${POSTGRES_PORT}/${POSTGRES_DB}
       - FLYWAY_GROUP=true
       - FLYWAY_CLEAN_DISABLED=false
+    platform: linux/amd64 # in case if host is running on another architecture, flyway image is only available on amd64.
     volumes:
       - ./services/sql:/flyway/sql
