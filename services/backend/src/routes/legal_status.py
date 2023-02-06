@@ -21,7 +21,6 @@ async def create_legal_status(
     async with request.app.state.db.acquire() as connection:
         # open a transaction
         async with connection.transaction():
-
             # create legal status and get ID
             legal_status_db = await connection.fetchrow(
                 "INSERT INTO legal_status VALUES (default, $1) RETURNING id",
