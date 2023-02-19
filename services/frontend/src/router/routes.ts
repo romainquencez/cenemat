@@ -31,6 +31,20 @@ const routes: RouteRecordRaw[] = [
           requiresAuth: true,
         },
       },
+      // administration
+      {
+        path: 'admin',
+        meta: {
+          requiresAdmin: true,
+        },
+        children: [
+          {
+            name: 'admin-users',
+            path: 'utilisateurs',
+            component: () => import('pages/admin/UsersPage.vue'),
+          }
+        ]
+      },
     ],
   },
 

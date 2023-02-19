@@ -115,6 +115,24 @@
             </q-item-section>
           </q-item>
 
+          <template v-if="userStore.isAdmin">
+            <q-item-label header>Administration</q-item-label>
+
+            <q-item
+              exact
+              clickable
+              v-ripple
+              :to="{ name: 'admin-users' }"
+            >
+              <q-item-section avatar>
+                <q-icon name="group" />
+              </q-item-section>
+              <q-item-section>
+                Utilisateurs
+              </q-item-section>
+            </q-item>
+          </template>
+
           <q-item v-if="version">
             <q-item-section>
               {{ version }}
