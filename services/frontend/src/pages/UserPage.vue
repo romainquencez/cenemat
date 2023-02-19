@@ -2,9 +2,7 @@
   <q-page class="q-pa-md">
     <h3>Mon compte</h3>
 
-    <q-list
-      separator
-    >
+    <q-list separator>
       <q-item>
         <q-item-section>
           <q-item-label overline>Identité</q-item-label>
@@ -42,16 +40,12 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'UserPage',
-  setup() {
+  setup () {
     const userStore = useUserStore()
-    const onSubmit = async () => {
-      return console.log('ok')
-    }
     const user = userStore.stateUser
 
     return {
       user,
-      onSubmit,
     }
   }
 })
