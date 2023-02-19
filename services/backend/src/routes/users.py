@@ -2,7 +2,7 @@ from datetime import timedelta
 
 from auth.jwthandler import create_access_token, get_current_user
 from auth.users import validate_user
-from crud.users import create_user, get_user_from_id
+from crud.users import create_user, get_user_from_id, get_users
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
@@ -75,3 +75,18 @@ async def register_user(request: Request, user: UserIn) -> UserOut:
 @router.get("/whoami", response_model=UserOut, dependencies=[Depends(get_current_user)])
 async def read_users_me(current_user: UserOut = Depends(get_current_user)):
     return current_user
+
+
+@router.get("/list", dependencies=[Depends(get_current_user)])
+async def list_users(
+    request: Request, current_user: UserOut = Depends(get_current_user)
+) -> list[UserOut]:
+    # check if user is admin
+    if not current_user.is_admin:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
+
+    # return list of users
+    async with request.app.state.db.acquire() as connection:
+        async with connection.transaction():
+            users = await get_users(connection)
+            return users

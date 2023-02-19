@@ -1,3 +1,5 @@
+from typing import List
+
 from models.users import UserId, UserIn, UserOut, UserPasswordOut
 from passlib.context import CryptContext
 
@@ -46,6 +48,26 @@ async def get_user_from_id(connection, user_id: int) -> UserOut:
             user_id,
         )
     )
+
+
+async def get_users(connection) -> List[UserOut]:
+    records = await connection.fetch(
+        """
+            SELECT
+                id,
+                identifier,
+                email,
+                farm,
+                first_name,
+                last_name,
+                membership_year,
+                created_at,
+                legal_status_id,
+                is_admin
+            FROM public.user ORDER BY identifier
+        """,
+    )
+    return [UserOut.parse_obj(record) for record in records]
 
 
 async def get_user_from_email(connection, email: str) -> UserOut:
