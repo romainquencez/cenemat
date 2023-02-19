@@ -39,7 +39,8 @@ async def get_user_from_id(connection, user_id: int) -> UserOut:
                     last_name,
                     membership_year,
                     created_at,
-                    legal_status_id
+                    legal_status_id,
+                    is_admin
                 FROM public.user WHERE id = $1
             """,
             user_id,
@@ -60,7 +61,8 @@ async def get_user_from_email(connection, email: str) -> UserOut:
                     last_name,
                     membership_year,
                     created_at,
-                    legal_status_id
+                    legal_status_id,
+                    is_admin
                 FROM public.user WHERE email = $1
             """,
             email,

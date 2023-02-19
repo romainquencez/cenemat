@@ -25,6 +25,7 @@ class UserOut(BaseModel):
     membership_year: int
     created_at: datetime
     legal_status_id: UUID
+    is_admin: bool
 
 
 class UserPasswordOut(BaseModel):
