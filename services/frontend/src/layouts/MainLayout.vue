@@ -137,14 +137,6 @@
             <q-item-section>
               {{ version }}
             </q-item-section>
-
-            <q-item-section>
-              Host : {{ matomoHost }}
-            </q-item-section>
-
-            <q-item-section>
-              Site ID : {{ matomoSiteId }}
-            </q-item-section>
           </q-item>
         </q-list>
       </q-scroll-area>
@@ -173,8 +165,6 @@ export default defineComponent({
       userStore,
       leftDrawerOpen,
       version,
-      matomoHost: process.env.MATOMO_HOST,
-      matomoSiteId: process.env.MATOMO_SITE_ID,
       toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value
       },
