@@ -70,7 +70,7 @@ module.exports = configure(function (/* ctx */) {
       publicPath: '/',
       // analyze: true,
       env: {
-        API_URL: 'https://www.cenemat.fr',
+        API_URL: '/',
         VERSION: process.env.VERSION,
         MATOMO_HOST: 'https://matomo.cenemat.fr',
         MATOMO_SITE_ID: 1,
