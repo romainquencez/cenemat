@@ -52,6 +52,14 @@ export default route(function (/* { store, ssrContext } */) {
       // redirect to user page
       Router.push({name: 'user'})
 
+      // if route require being admin, but user is not admin or not authenticated
+    } else if (
+      to.matched.some((record) => record.meta.requiresAdmin) &&
+      (!userStore.isAuthenticated || !userStore.isAdmin)
+    ) {
+      // redirect to home page
+      Router.push({name: 'home'})
+
     // if route does not require any special authentication
     } else {
       // continue to route

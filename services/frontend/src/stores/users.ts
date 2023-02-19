@@ -7,6 +7,7 @@ export const useUserStore = defineStore('users', {
   }),
   getters: {
     isAuthenticated: state => !!state.user,
+    isAdmin: state => state.user ? state.user.isAdmin : false,
     stateUser: state => state.user,
   },
   actions: {
@@ -24,6 +25,7 @@ export const useUserStore = defineStore('users', {
         id: data.id,
         identifier: Number(data.identifier),
         legalStatusId: data.legal_status_id,
+        isAdmin: data.is_admin,
       }
       return response
     },
