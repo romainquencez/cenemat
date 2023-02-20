@@ -87,7 +87,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .header {
-  background: url('assets/background.png') no-repeat;
+  background: url('assets/background.webp') no-repeat;
   background-size: cover;
 
   .content {
