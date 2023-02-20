@@ -53,6 +53,14 @@ export default defineComponent({
           label: 'Adhésion',
           sortable: true,
         },
+        {
+          align: 'left',
+          format: val => !val ? '✅' : '❌',
+          name: 'is_deleted',
+          field: 'is_deleted',
+          label: 'Actif',
+          sortable: true,
+        },
       ],
       rows: await getUsers()
     }

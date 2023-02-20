@@ -26,6 +26,7 @@ class UserOut(BaseModel):
     created_at: datetime
     legal_status_id: UUID
     is_admin: bool
+    is_deleted: bool
 
 
 class UserPasswordOut(BaseModel):

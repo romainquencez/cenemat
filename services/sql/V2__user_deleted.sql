@@ -1,0 +1,1 @@
+ALTER TABLE public.user ADD is_deleted BOOLEAN NOT NULL DEFAULT FALSE;

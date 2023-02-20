@@ -42,8 +42,9 @@ async def get_user_from_id(connection, user_id: int) -> UserOut:
                     membership_year,
                     created_at,
                     legal_status_id,
-                    is_admin
-                FROM public.user WHERE id = $1
+                    is_admin,
+                    is_deleted
+                FROM public.user WHERE id = $1 AND is_deleted IS FALSE
             """,
             user_id,
         )
@@ -63,7 +64,8 @@ async def get_users(connection) -> List[UserOut]:
                 membership_year,
                 created_at,
                 legal_status_id,
-                is_admin
+                is_admin,
+                is_deleted
             FROM public.user ORDER BY identifier
         """,
     )
@@ -84,8 +86,9 @@ async def get_user_from_email(connection, email: str) -> UserOut:
                     membership_year,
                     created_at,
                     legal_status_id,
-                    is_admin
-                FROM public.user WHERE email = $1
+                    is_admin,
+                    is_deleted
+                FROM public.user WHERE email = $1 AND is_deleted IS FALSE
             """,
             email,
         )
@@ -95,6 +98,7 @@ async def get_user_from_email(connection, email: str) -> UserOut:
 async def get_user_password(connection, email: str) -> UserPasswordOut | None:
     # try to get user's password with its email, or return None if email does not exist.
     record = await connection.fetchrow(
-        "SELECT id, password FROM public.user WHERE email = $1", email
+        "SELECT id, password FROM public.user WHERE email = $1 AND is_deleted IS FALSE",
+        email,
     )
     return UserPasswordOut.parse_obj(record) if record else None
