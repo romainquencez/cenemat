@@ -19,8 +19,6 @@ services:
       - '/app/node_modules'
     ports:
       - "9000:9000"
-    environment:
-      - API_URL=${API_URL}
 
   db:
     image: postgres:15-alpine
