@@ -14,7 +14,7 @@ import { defineComponent } from 'vue'
 import { getUsers } from 'src/modules/users'
 
 export default defineComponent({
-  name: 'UsersPage',
+  name: 'UsersTable',
   async setup () {
     return {
       columns: [
