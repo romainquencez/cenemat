@@ -14,13 +14,11 @@ async def create_user(connection, user: UserIn) -> UserId:
                 INSERT INTO public.user (
                     identifier,
                     email,
-                    farm,
                     first_name,
                     last_name,
                     membership_year,
-                    password,
-                    legal_status_id
-                ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+                    password
+                ) VALUES ($1, $2, $3, $4, $5, $6)
                 RETURNING id
             """,
             *user.dict().values()
@@ -36,12 +34,10 @@ async def get_user_from_id(connection, user_id: int) -> UserOut:
                     id,
                     identifier,
                     email,
-                    farm,
                     first_name,
                     last_name,
                     membership_year,
                     created_at,
-                    legal_status_id,
                     is_admin,
                     is_deleted
                 FROM public.user WHERE id = $1 AND is_deleted IS FALSE
@@ -58,12 +54,10 @@ async def get_users(connection) -> List[UserOut]:
                 id,
                 identifier,
                 email,
-                farm,
                 first_name,
                 last_name,
                 membership_year,
                 created_at,
-                legal_status_id,
                 is_admin,
                 is_deleted
             FROM public.user ORDER BY identifier
@@ -80,12 +74,10 @@ async def get_user_from_email(connection, email: str) -> UserOut:
                     id,
                     identifier,
                     email,
-                    farm,
                     first_name,
                     last_name,
                     membership_year,
                     created_at,
-                    legal_status_id,
                     is_admin,
                     is_deleted
                 FROM public.user WHERE email = $1 AND is_deleted IS FALSE

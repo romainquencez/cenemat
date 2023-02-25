@@ -5,7 +5,7 @@ import sentry_sdk
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from routes import legal_status, users
+from routes import farms, legal_status, users
 from settings import settings
 
 # initialize Sentry SDK before FastAPI
@@ -29,6 +29,7 @@ app.add_middleware(
 )
 
 # add routes
+app.include_router(farms.router, prefix="/farms")
 app.include_router(legal_status.router, prefix="/legal-status")
 app.include_router(users.router, prefix="/users")
 
