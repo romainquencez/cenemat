@@ -19,12 +19,10 @@ export const useUserStore = defineStore('users', {
       this.user = {
         createdAt: new Date(data.created_at),
         email: data.email,
-        farm: data.farm,
         firstName: data.first_name,
         lastName: data.last_name,
         id: data.id,
         identifier: Number(data.identifier),
-        legalStatusId: data.legal_status_id,
         isAdmin: data.is_admin,
       }
       return response
