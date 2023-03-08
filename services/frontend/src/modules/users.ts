@@ -1,5 +1,5 @@
-import { api } from 'boot/axios'
+import { get } from 'src/mixins/fetch'
 
 export async function getUsers () {
-  return await api.get('users/list').then(response => response.data)
+  return await get('users/list').then(response => response.data)
 }

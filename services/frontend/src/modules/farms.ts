@@ -1,5 +1,5 @@
-import { api } from 'boot/axios'
+import { get } from 'src/mixins/fetch'
 
 export async function getFarms () {
-  return await api.get('farms/list').then(response => response.data)
+  return await get('farms/list').then(response => response.data)
 }
