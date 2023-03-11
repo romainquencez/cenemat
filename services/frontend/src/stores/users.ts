@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { api } from 'boot/axios'
+import { get, post, postFormData } from 'src/mixins/fetch'
 
 export const useUserStore = defineStore('users', {
   state: () => ({
@@ -12,10 +12,8 @@ export const useUserStore = defineStore('users', {
   },
   actions: {
     async logIn(credentials) {
-      const response = await api.post('users/login', credentials)
-      if (response.status !== 200 ) throw Error
-      const user = await api.get('users/whoami')
-      const data = user.data
+      const response = await postFormData('users/login', credentials)
+      const data = await get('users/whoami')
       this.user = {
         createdAt: new Date(data.created_at),
         email: data.email,
@@ -28,7 +26,7 @@ export const useUserStore = defineStore('users', {
       return response
     },
     async logOut() {
-      return await api.post('users/logout').then(() => {
+      return await post('users/logout').then(() => {
         this.user = null
       })
     }
